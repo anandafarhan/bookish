@@ -20,8 +20,8 @@
     "cp:android:prod": "yarn env:generate && appcenter codepush release-react -a Group/App-Android -d Production"
   },
   "dependencies": {
-    "@gluestack-style/react": "^1.0.4",
-    "@gluestack-ui/themed": "^1.0.4",
+    "@gluestack-style/react": "^1.0.10",
+    "@gluestack-ui/themed": "^1.0.8",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.9.13",
