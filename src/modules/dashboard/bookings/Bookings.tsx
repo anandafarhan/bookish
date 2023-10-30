@@ -1,4 +1,5 @@
 import React from 'react';
+import {FlatList, StyleSheet} from 'react-native';
 import {
   Box,
   HStack,
@@ -9,10 +10,9 @@ import {
   Text,
 } from '@gluestack-ui/themed';
 
-import {SafeAreaView} from 'src/core/components/native';
 import Styles from 'src/styles';
 import images from 'src/assets/images';
-import {FlatList, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'src/core/components/native';
 
 const status = [
   {

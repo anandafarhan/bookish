@@ -9,16 +9,9 @@ export type RootStackParamList = {
     onFinish?: (e: unknown) => void;
   };
 
-  'auth/onboarding': undefined;
-  'auth/login-register': undefined;
-  'auth/login/otp': {username: string};
-
-  'auth/register/otp': {username: string};
-  'auth/register/finish': undefined;
-
   dashboard: undefined;
   'dashboard/home': undefined;
   'dashboard/bookings': undefined;
-  'dashboard/bookmarks': undefined;
+  'dashboard/saved': undefined;
   'dashboard/account': undefined;
 };
