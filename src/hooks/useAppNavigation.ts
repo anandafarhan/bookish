@@ -1,16 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-import {
-  ExampleStackParamList,
-  RootStackParamList,
-} from 'src/routers/routerType';
+import {RootStackParamList} from 'src/routers/routerType';
 
 const useAppNavigation = () => {
   const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList & ExampleStackParamList>
-    >();
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return navigation;
 };

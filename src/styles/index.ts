@@ -18,9 +18,15 @@ const Styles = StyleSheet.create({
     shadowOffset: {height: -2, width: 0},
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   tabStyle: {
     paddingVertical: ms(10),
+  },
+  tabBarIconStyle: {
+    width: 20,
+    height: 20,
   },
 
   defaultShadow: {

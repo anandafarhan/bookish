@@ -18,29 +18,7 @@ export type RootStackParamList = {
 
   dashboard: undefined;
   'dashboard/home': undefined;
-  'dashboard/my-store': undefined;
-  'dashboard/transactions': undefined;
+  'dashboard/bookings': undefined;
+  'dashboard/bookmarks': undefined;
   'dashboard/account': undefined;
-
-  'demo-home': undefined;
-  example: undefined;
-};
-
-export type ExampleStackParamList = {
-  exampleList: undefined;
-  'example/button': undefined;
-  'example/text': undefined;
-  'example/text-input': undefined;
-  'example/text-area': undefined;
-  'example/checkbox': undefined;
-  'example/radio': undefined;
-  'example/select': undefined;
-  'example/slider': undefined;
-  'example/switch': undefined;
-  'example/alert': undefined;
-  'example/progress': undefined;
-  'example/spinner': undefined;
-  'example/toast': undefined;
-  'example/badge': undefined;
-  'example/alert-dialog': undefined;
 };
