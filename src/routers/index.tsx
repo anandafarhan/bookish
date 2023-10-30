@@ -9,6 +9,7 @@ import {
 import Styles from 'src/styles';
 import Home from 'src/modules/dashboard/home/Home';
 import BookingsScreen from 'src/modules/dashboard/bookings/Bookings';
+import SavedBookScreen from 'src/modules/dashboard/saved/Saved';
 
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
@@ -54,10 +55,10 @@ const HomeTabBarStack = () => (
       }}
     />
     <TabStack.Screen
-      name="dashboard/bookmarks"
-      component={Home}
+      name="dashboard/saved"
+      component={SavedBookScreen}
       options={{
-        title: 'Bookmarks',
+        title: 'Saved',
         tabBarIcon: ({focused, ...props}) => (
           <Ionicons
             name={focused ? 'bookmark' : 'bookmark-outline'}
