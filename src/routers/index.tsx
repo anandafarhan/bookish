@@ -8,6 +8,7 @@ import {
 
 import Styles from 'src/styles';
 import Home from 'src/modules/dashboard/home/Home';
+import BookingsScreen from 'src/modules/dashboard/bookings/Bookings';
 
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
@@ -44,7 +45,7 @@ const HomeTabBarStack = () => (
     />
     <TabStack.Screen
       name="dashboard/bookings"
-      component={Home}
+      component={BookingsScreen}
       options={{
         title: 'Bookings',
         tabBarIcon: ({focused, ...props}) => (
