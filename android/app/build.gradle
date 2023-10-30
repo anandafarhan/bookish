@@ -74,9 +74,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.meteorboilerplate"
+    namespace "com.afcode.bookish"
     defaultConfig {
-        applicationId "com.meteorboilerplate"
+        applicationId "com.afcode.bookish"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
