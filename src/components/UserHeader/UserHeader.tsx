@@ -12,7 +12,7 @@ import images from 'src/assets/images';
 const UserHeader = () => {
   return (
     <HStack px={20} alignItems="center" justifyContent="space-between">
-      <Heading>Hi, Farhan!</Heading>
+      <Heading fontSize={24}>Hi, Farhan!</Heading>
 
       <Avatar bg="$amber400" size="md">
         <AvatarFallbackText>AF</AvatarFallbackText>

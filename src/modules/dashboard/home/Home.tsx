@@ -1,18 +1,23 @@
 import React from 'react';
-import {SafeAreaView} from '@core/components/native';
 import {ScrollView} from '@gluestack-ui/themed';
-import useAppNavigation from 'src/hooks/useAppNavigation';
 
-import UserHeader from 'src/components/UserHeader';
+import {SafeAreaView} from '@core/components/native';
+
 import SearchBar from './components/SearchBar';
+import UserHeader from 'src/components/UserHeader';
+import BookSection from 'src/components/BookSection';
+import Styles from 'src/styles';
 
 const Home = () => {
-  const navigation = useAppNavigation();
   return (
     <SafeAreaView flex={1}>
       <UserHeader />
-      <SearchBar />
-      <ScrollView />
+      <ScrollView contentContainerStyle={Styles.scrollViewContainer}>
+        <SearchBar />
+        <BookSection title="Physics" />
+        {/* <BookSection title="Programming" /> */}
+        <BookSection title="Magic" vertical />
+      </ScrollView>
     </SafeAreaView>
   );
 };

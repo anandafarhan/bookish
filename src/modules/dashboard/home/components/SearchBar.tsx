@@ -7,8 +7,9 @@ const SearchBar = () => {
   return (
     <Pressable>
       <HStack
-        m={20}
         p={10}
+        mt={20}
+        mx={20}
         bg="$blueGray200"
         gap={10}
         borderRadius={10}
