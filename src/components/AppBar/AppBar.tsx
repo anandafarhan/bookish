@@ -4,6 +4,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 
 import {XStack} from 'src/core/components/native';
 import useAppNavigation from 'src/hooks/useAppNavigation';
+import {useColorScheme} from 'react-native';
 
 type Props = {
   start?: React.ReactNode | 'back' | 'close';
@@ -15,18 +16,27 @@ type Props = {
 const AppBar = ({title, centerTitle, start, end}: Props) => {
   const navigation = useAppNavigation();
   const goBack = () => navigation.goBack();
+  const isDarkMode = useColorScheme() === 'dark';
   const startComponent = () => {
     switch (start) {
       case 'back':
         return (
           <Pressable px={15} py={10} onPress={goBack}>
-            <Octicons size={30} name="arrow-left" />
+            <Octicons
+              size={30}
+              name="arrow-left"
+              color={isDarkMode ? '#FAFAFA' : '#000'}
+            />
           </Pressable>
         );
       case 'close':
         return (
           <Pressable px={15} py={10} onPress={goBack}>
-            <Octicons size={30} name="x" />
+            <Octicons
+              size={30}
+              name="x"
+              color={isDarkMode ? '#FAFAFA' : '#000'}
+            />
           </Pressable>
         );
       default:
@@ -39,7 +49,11 @@ const AppBar = ({title, centerTitle, start, end}: Props) => {
       case 'close':
         return (
           <Pressable px={15} py={10} onPress={goBack}>
-            <Octicons size={30} name="x" />
+            <Octicons
+              size={30}
+              name="x"
+              color={isDarkMode ? '#FAFAFA' : '#000'}
+            />
           </Pressable>
         );
       default:
