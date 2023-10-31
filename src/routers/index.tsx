@@ -11,7 +11,7 @@ import Styles from 'src/styles';
 import Home from 'src/modules/dashboard/home/Home';
 import BookingsScreen from 'src/modules/dashboard/bookings/Bookings';
 import SavedBookScreen from 'src/modules/dashboard/saved/Saved';
-import SubjectBooksScreen from 'src/modules/subjects/SubjectBooks';
+import SubjectBooksScreen from 'src/modules/subjectBooks/SubjectBooks';
 
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
