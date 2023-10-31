@@ -13,62 +13,72 @@ import SavedBookScreen from 'src/modules/dashboard/saved/Saved';
 
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
+import {useColorScheme} from 'react-native';
 
 export type StackProps = NativeStackScreenProps<RootStackParamList>;
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const TabStack = createBottomTabNavigator<RootStackParamList>();
 
-const HomeTabBarStack = () => (
-  <TabStack.Navigator
-    initialRouteName="dashboard/home"
-    backBehavior="initialRoute"
-    screenOptions={{
-      ...screenOptions,
-      tabBarStyle: Styles.tabBarStyle,
-      tabBarItemStyle: Styles.tabStyle,
-      // tabBarButton: BottomTabBarButton,
-      tabBarHideOnKeyboard: true,
-      tabBarShowLabel: false,
-      tabBarActiveTintColor: '#272727',
-      tabBarInactiveTintColor: '#272727',
-      tabBarIconStyle: Styles.tabBarIconStyle,
-    }}>
-    <TabStack.Screen
-      name="dashboard/home"
-      component={Home}
-      options={{
-        title: 'Home',
-        tabBarIcon: ({focused, ...props}) => (
-          <Ionicons name={focused ? 'home' : 'home-outline'} {...props} />
-        ),
-      }}
-    />
-    <TabStack.Screen
-      name="dashboard/bookings"
-      component={BookingsScreen}
-      options={{
-        title: 'Bookings',
-        tabBarIcon: ({focused, ...props}) => (
-          <Ionicons name={focused ? 'book' : 'book-outline'} {...props} />
-        ),
-      }}
-    />
-    <TabStack.Screen
-      name="dashboard/saved"
-      component={SavedBookScreen}
-      options={{
-        title: 'Saved',
-        tabBarIcon: ({focused, ...props}) => (
-          <Ionicons
-            name={focused ? 'bookmark' : 'bookmark-outline'}
-            {...props}
-          />
-        ),
-      }}
-    />
-  </TabStack.Navigator>
-);
+const HomeTabBarStack = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+  return (
+    <TabStack.Navigator
+      initialRouteName="dashboard/home"
+      backBehavior="initialRoute"
+      screenOptions={{
+        ...screenOptions,
+        tabBarStyle: [
+          Styles.tabBarStyle,
+          {
+            backgroundColor: isDarkMode ? '#1e293b' : '#FFFFFF',
+            borderColor: isDarkMode ? '#1e293b' : '#FFFFFF',
+          },
+        ],
+        tabBarItemStyle: Styles.tabStyle,
+        // tabBarButton: BottomTabBarButton,
+        tabBarHideOnKeyboard: true,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: isDarkMode ? '#FAFAFA' : '#272727',
+        tabBarInactiveTintColor: isDarkMode ? '#FAFAFA' : '#272727',
+        tabBarIconStyle: Styles.tabBarIconStyle,
+      }}>
+      <TabStack.Screen
+        name="dashboard/home"
+        component={Home}
+        options={{
+          title: 'Home',
+          tabBarIcon: ({focused, ...props}) => (
+            <Ionicons name={focused ? 'home' : 'home-outline'} {...props} />
+          ),
+        }}
+      />
+      <TabStack.Screen
+        name="dashboard/bookings"
+        component={BookingsScreen}
+        options={{
+          title: 'Bookings',
+          tabBarIcon: ({focused, ...props}) => (
+            <Ionicons name={focused ? 'book' : 'book-outline'} {...props} />
+          ),
+        }}
+      />
+      <TabStack.Screen
+        name="dashboard/saved"
+        component={SavedBookScreen}
+        options={{
+          title: 'Saved',
+          tabBarIcon: ({focused, ...props}) => (
+            <Ionicons
+              name={focused ? 'bookmark' : 'bookmark-outline'}
+              {...props}
+            />
+          ),
+        }}
+      />
+    </TabStack.Navigator>
+  );
+};
 
 const Router = () => {
   return (

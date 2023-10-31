@@ -23,7 +23,12 @@ const SavedBookScreen = () => {
         numColumns={3}
         renderItem={() => (
           <Pressable w="30%" mr={18}>
-            <Box h={170} p={12} mt={30} bg="$blueGray200" borderRadius={12}>
+            <Box
+              h={170}
+              p={12}
+              mt={30}
+              borderRadius={12}
+              sx={{_light: {bg: '$blueGray200'}, _dark: {bg: '$blueGray700'}}}>
               <Box top={-30}>
                 <Image
                   alt="alt"
@@ -32,7 +37,11 @@ const SavedBookScreen = () => {
                   h={130}
                   borderRadius={8}
                 />
-                <Text mt={10} fontSize={14} fontWeight="$medium" color="$black">
+                <Text
+                  mt={10}
+                  fontSize={14}
+                  fontWeight="$medium"
+                  sx={{_light: {color: '$black'}}}>
                   Book Title
                 </Text>
                 <Text mt={-5} fontSize={12} fontWeight="$light">

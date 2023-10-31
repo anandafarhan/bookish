@@ -13,7 +13,6 @@ const Styles = StyleSheet.create({
   tabBarStyle: {
     flexDirection: 'column',
     height: Platform.select({ios: ms(76), android: ms(58)}),
-    backgroundColor: '#FFFFFF',
     elevation: 10,
     shadowOffset: {height: -2, width: 0},
     shadowOpacity: 0.1,

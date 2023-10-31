@@ -11,12 +11,12 @@ import Styles from 'src/styles';
 const Home = () => {
   return (
     <SafeAreaView flex={1}>
-      <UserHeader />
       <ScrollView contentContainerStyle={Styles.scrollViewContainer}>
+        <UserHeader />
         <SearchBar />
-        <BookSection title="Physics" />
-        {/* <BookSection title="Programming" /> */}
-        <BookSection title="Magic" vertical />
+        <BookSection subject="Physics" />
+        <BookSection subject="Programming" />
+        <BookSection subject="Magic" vertical />
       </ScrollView>
     </SafeAreaView>
   );

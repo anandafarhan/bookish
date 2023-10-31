@@ -35,7 +35,7 @@ function App(): JSX.Element {
     colors: {
       ...DefaultTheme.colors,
       primary: '#FF3333',
-      background: isDarkMode ? '#333' : '#FAFAFA',
+      background: isDarkMode ? '#0f172a' : '#FAFAFA',
     },
   };
 

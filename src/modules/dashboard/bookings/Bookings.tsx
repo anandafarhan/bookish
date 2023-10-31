@@ -73,10 +73,11 @@ const BookingsScreen = () => {
             .fill('')
             .map(() => (
               <Pressable
-                bg="$white"
                 borderRadius={12}
-                borderWidth={1}
-                borderColor="$blueGray300">
+                sx={{
+                  _light: {bg: '$blueGray200'},
+                  _dark: {bg: '$blueGray700'},
+                }}>
                 <HStack gap={10} alignItems="center">
                   <Image
                     alt="title"
@@ -87,7 +88,10 @@ const BookingsScreen = () => {
                   />
                   <Box w="70%">
                     <HStack justifyContent="space-between" alignItems="center">
-                      <Text fontSize={16} fontWeight="$medium" color="$black">
+                      <Text
+                        fontSize={16}
+                        fontWeight="$medium"
+                        sx={{_light: {color: '$black'}}}>
                         Book Title
                       </Text>
                       <Box
@@ -109,11 +113,11 @@ const BookingsScreen = () => {
                         GoodBooks
                       </Text>
                       <Text>-</Text>
-                      <Text fontSize={12} color="black">
+                      <Text fontSize={12} sx={{_light: {color: '$black'}}}>
                         12:00 PM
                       </Text>
                       <Text>-</Text>
-                      <Text fontSize={12} color="black">
+                      <Text fontSize={12} sx={{_light: {color: '$black'}}}>
                         25 Dec 2023
                       </Text>
                     </HStack>

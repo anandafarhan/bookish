@@ -1,22 +1,52 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, HStack, Text} from '@gluestack-ui/themed';
 import {FlatList, Pressable, StyleSheet} from 'react-native';
 
 import ItemCard from './ItemCard';
 import ItemListCard from './ItemListCard';
+import Library, {IGetSubjectsResponse} from 'src/service/Library';
 
-type Props = {title: string; onSeeMore?: () => void; vertical?: boolean};
+type Props = {
+  subject: string;
+  limit?: number;
+  onSeeMore?: () => void;
+  vertical?: boolean;
+};
 
-const BookSection = ({title, onSeeMore, vertical}: Props) => {
+const BookSection = ({subject, limit = 5, onSeeMore, vertical}: Props) => {
+  const [data, setData] = React.useState<IGetSubjectsResponse['works']>([]);
+
+  const fetchData = async () => {
+    const response = await Library.getSubject({
+      subject: subject.toLowerCase(),
+      limit,
+    });
+
+    if (response?.status === 200) {
+      setData(response?.data?.works);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (data?.length < 1) {
+    return undefined;
+  }
+
   return (
     <>
       <Box px={20} mt={30}>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text fontSize={20} fontWeight="$bold" color="$black">
-            {title}
+          <Text fontSize={20} fontWeight="$bold">
+            {subject}
           </Text>
           <Pressable onPress={onSeeMore}>
-            <Text fontSize={14} fontWeight="$medium" color="$blueGray500">
+            <Text
+              fontSize={14}
+              fontWeight="$medium"
+              sx={{_light: {color: '$blueGray500'}}}>
               See more
             </Text>
           </Pressable>
@@ -24,9 +54,14 @@ const BookSection = ({title, onSeeMore, vertical}: Props) => {
       </Box>
       {!vertical ? (
         <FlatList
-          data={Array(5).fill('')}
-          renderItem={() => (
-            <ItemCard id="aa" title="Book Title" author="Book author" />
+          data={data}
+          renderItem={({item}) => (
+            <ItemCard
+              id={item.key}
+              title={item?.title}
+              author={item?.authors?.[0]?.name}
+              cover_id={item.cover_id}
+            />
           )}
           contentContainerStyle={styles.containerStyle}
           showsHorizontalScrollIndicator={false}
@@ -34,16 +69,15 @@ const BookSection = ({title, onSeeMore, vertical}: Props) => {
         />
       ) : (
         <Box px={20} py={10} gap={15}>
-          {Array(5)
-            .fill('')
-            .map((i, idx) => (
-              <ItemListCard
-                key={idx}
-                id="aa"
-                title="Book Title"
-                author="Book author"
-              />
-            ))}
+          {data.map(item => (
+            <ItemListCard
+              key={item.key}
+              id={item.key}
+              title={item?.title}
+              author={item?.authors?.[0]?.name}
+              cover_id={item.cover_id}
+            />
+          ))}
         </Box>
       )}
     </>
