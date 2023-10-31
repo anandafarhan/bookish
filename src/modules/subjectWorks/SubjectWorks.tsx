@@ -8,7 +8,6 @@ import {
   Image,
   Pressable,
   ScrollView,
-  Spinner,
   Text,
   useToken,
 } from '@gluestack-ui/themed';
@@ -20,10 +19,11 @@ import {RootStackParamList} from 'src/routers/routerType';
 import Library, {IGetSubjectsResponse} from 'src/service/Library';
 import {useColorScheme} from 'react-native';
 import AppBar from 'src/components/AppBar';
+import ScreenSpinner from 'src/components/Spinner/ScreenSpinner';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'subject-books'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'subject-works'>;
 
-const SubjectBooksScreen = ({route}: Props) => {
+const SubjectWorksScreen = ({route, navigation}: Props) => {
   const {subject} = route?.params;
   const isDarkMode = useColorScheme() === 'dark';
   const gray = useToken('colors', 'blueGray600');
@@ -54,12 +54,10 @@ const SubjectBooksScreen = ({route}: Props) => {
   return (
     <SafeAreaView flex={1}>
       <ScrollView contentContainerStyle={Styles.scrollViewContainer}>
-        <AppBar title={`${subject} Books`} start="back" />
+        <AppBar title={`${subject} Works`} start="back" />
         <Box flex={1}>
           {isLoading ? (
-            <Box flex={1} justifyContent="center" alignItems="center">
-              <Spinner size="large" color="$blueGray500" />
-            </Box>
+            <ScreenSpinner />
           ) : (
             <Box
               flex={1}
@@ -68,8 +66,14 @@ const SubjectBooksScreen = ({route}: Props) => {
               flexDirection="row"
               gap={15}
               justifyContent="space-evenly">
-              {data.map(({cover_id, title, authors}) => (
-                <Pressable>
+              {data.map(({cover_id, title, authors, key}) => (
+                <Pressable
+                  key={key}
+                  onPress={() =>
+                    navigation.navigate('work-details', {
+                      key: key?.replace('/works/', ''),
+                    })
+                  }>
                   <Box
                     w={150}
                     h={260}
@@ -164,4 +168,4 @@ const SubjectBooksScreen = ({route}: Props) => {
   );
 };
 
-export default SubjectBooksScreen;
+export default SubjectWorksScreen;

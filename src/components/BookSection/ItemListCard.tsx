@@ -10,19 +10,22 @@ import {
 } from '@gluestack-ui/themed';
 
 import {GET_COVER_API} from 'src/constants/api';
+import useAppNavigation from 'src/hooks/useAppNavigation';
 
 type Props = {
-  id: string;
+  keyId: string;
   title: string;
   author: string;
   cover_id: number;
 };
 
-const ItemListCard = ({author, title, cover_id}: Props) => {
+const ItemListCard = ({keyId, author, title, cover_id}: Props) => {
+  const navigation = useAppNavigation();
   const gray = useToken('colors', 'blueGray600');
 
   return (
-    <Pressable>
+    <Pressable
+      onPress={() => navigation.navigate('work-details', {key: keyId})}>
       <Box
         borderRadius={12}
         sx={{_light: {bg: '$blueGray200'}, _dark: {bg: '$blueGray700'}}}>
@@ -46,16 +49,15 @@ const ItemListCard = ({author, title, cover_id}: Props) => {
               <FontAwesome name="book" size={30} color={gray} />
             </Box>
           )}
-          <Box alignItems="flex-start">
+          <Box w="70%" alignItems="flex-start">
             <Text
-              w="80%"
               fontSize={16}
               fontWeight="$medium"
               numberOfLines={2}
               sx={{_light: {color: '$black'}}}>
               {title}
             </Text>
-            <Text w="80%" fontSize={14} fontWeight="$light" numberOfLines={1}>
+            <Text fontSize={14} fontWeight="$light" numberOfLines={1}>
               {author}
             </Text>
           </Box>

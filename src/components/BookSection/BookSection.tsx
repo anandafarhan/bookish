@@ -45,7 +45,7 @@ const BookSection = ({subject, limit = 5, vertical}: Props) => {
             {subject}
           </Text>
           <Pressable
-            onPress={() => navigation.navigate('subject-books', {subject})}>
+            onPress={() => navigation.navigate('subject-works', {subject})}>
             <Text
               fontSize={14}
               fontWeight="$medium"
@@ -60,7 +60,7 @@ const BookSection = ({subject, limit = 5, vertical}: Props) => {
           data={data}
           renderItem={({item}) => (
             <ItemCard
-              id={item.key}
+              keyId={item.key}
               title={item?.title}
               author={item?.authors?.[0]?.name}
               cover_id={item.cover_id}
@@ -75,7 +75,7 @@ const BookSection = ({subject, limit = 5, vertical}: Props) => {
           {data.map(item => (
             <ItemListCard
               key={item.key}
-              id={item.key}
+              keyId={item.key}
               title={item?.title}
               author={item?.authors?.[0]?.name}
               cover_id={item.cover_id}

@@ -21,15 +21,21 @@ export const GET_SUBJECT_API = '/subjects';
  * - /works/OL17860744W.json
  *
  * GET Work edition
- * - /authors/OL7115219A/editions.json
+ * - /works/OL7115219A/editions.json
  *
  * GET Work bookshelves
- * - /authors/OL7115219A/bookshelves.json
+ * - /works/OL7115219A/bookshelves.json
  *
  * GET Work ratings
- * - /authors/OL7115219A/ratings.json
+ * - /works/OL7115219A/ratings.json
  */
 export const GET_WORK_API = '/works';
+
+/**
+ * GET Book details
+ * - /books/OL7870148M.json
+ */
+export const GET_BOOK_API = '/books';
 
 /**
  * GET Author details

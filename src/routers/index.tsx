@@ -11,10 +11,11 @@ import Styles from 'src/styles';
 import Home from 'src/modules/dashboard/home/Home';
 import BookingsScreen from 'src/modules/dashboard/bookings/Bookings';
 import SavedBookScreen from 'src/modules/dashboard/saved/Saved';
-import SubjectBooksScreen from 'src/modules/subjectBooks/SubjectBooks';
+import SubjectWorksScreen from 'src/modules/subjectWorks/SubjectWorks';
 
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
+import WorkDetailScreen from 'src/modules/workDetails/WorkDetails';
 
 export type StackProps = NativeStackScreenProps<RootStackParamList>;
 
@@ -87,7 +88,8 @@ const Router = () => {
       screenOptions={{...screenOptions}}
       initialRouteName="dashboard">
       <AppStack.Screen name="dashboard" component={HomeTabBarStack} />
-      <AppStack.Screen name="subject-books" component={SubjectBooksScreen} />
+      <AppStack.Screen name="subject-works" component={SubjectWorksScreen} />
+      <AppStack.Screen name="work-details" component={WorkDetailScreen} />
       {/* <AppStack.Screen name="inappbrowser" component={Home} /> */}
     </AppStack.Navigator>
   );

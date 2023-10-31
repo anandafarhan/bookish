@@ -3,18 +3,21 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Box, Image, Pressable, Text, useToken} from '@gluestack-ui/themed';
 
 import {GET_COVER_API} from 'src/constants/api';
+import useAppNavigation from 'src/hooks/useAppNavigation';
 
 type Props = {
-  id: string;
+  keyId: string;
   title: string;
   author: string;
   cover_id: number;
 };
 
-const ItemCard = ({author, title, cover_id}: Props) => {
+const ItemCard = ({keyId, author, title, cover_id}: Props) => {
+  const navigation = useAppNavigation();
   const gray = useToken('colors', 'blueGray600');
   return (
-    <Pressable>
+    <Pressable
+      onPress={() => navigation.navigate('work-details', {key: keyId})}>
       <Box
         w={120}
         h={200}

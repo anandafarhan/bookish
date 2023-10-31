@@ -15,5 +15,7 @@ export type RootStackParamList = {
   'dashboard/saved': undefined;
   'dashboard/account': undefined;
 
-  'subject-books': {subject: string};
+  'subject-works': {subject: string};
+  'work-details': {key: string};
+  'work-editions': {key: string};
 };
