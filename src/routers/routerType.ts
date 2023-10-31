@@ -18,4 +18,5 @@ export type RootStackParamList = {
   'subject-works': {subject: string};
   'work-details': {key: string};
   'work-editions': {key: string};
+  'book-details': {key: string};
 };

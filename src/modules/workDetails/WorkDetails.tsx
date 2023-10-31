@@ -8,6 +8,7 @@ import {
   Heading,
   Image,
   Text,
+  VStack,
   useToken,
 } from '@gluestack-ui/themed';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -139,30 +140,41 @@ const WorkDetailScreen = ({route, navigation}: Props) => {
               : workDetail?.description?.value || 'No works description'}
           </Text>
 
-          <Box gap={-5} mt={10}>
-            <HStack gap={1}>
-              <Text fontSize={12}>Publish Date:</Text>
-              <Text fontSize={12}>{workDetail?.first_publish_date}</Text>
-            </HStack>
-            <HStack gap={1}>
-              <Text fontSize={12}>Revision Number:</Text>
-              <Text fontSize={12}>{workDetail?.revision}</Text>
-            </HStack>
-            <HStack gap={1}>
-              <Text fontSize={12}>Editon Found:</Text>
-              <Text fontSize={12}>{editionSize}</Text>
+          <Box mt={10}>
+            <HStack gap={10}>
+              <VStack>
+                <Text fontSize={12}>Publish Date</Text>
+                <Text fontSize={12}>Revision Number</Text>
+                <Text fontSize={12}>Open Library</Text>
+                <Text fontSize={12}>Number of Edition</Text>
+              </VStack>
+              <VStack>
+                <Text fontSize={12}>:</Text>
+                <Text fontSize={12}>:</Text>
+                <Text fontSize={12}>:</Text>
+                <Text fontSize={12}>:</Text>
+              </VStack>
+              <VStack>
+                <Text fontSize={12}>
+                  {workDetail?.first_publish_date || '-'}
+                </Text>
+                <Text fontSize={12}>{workDetail?.revision || '-'}</Text>
+                <Text fontSize={12}>{workOLID}</Text>
+                <Text fontSize={12}>{editionSize || '-'}</Text>
+              </VStack>
             </HStack>
           </Box>
-          <Button
-            mt={20}
-            action="positive"
-            onPress={() =>
-              navigation.navigate('work-editions', {key: workOLID})
-            }>
-            <ButtonText>Browse Work Editions</ButtonText>
-          </Button>
         </Box>
       </ScrollView>
+      <HStack py={10} px={20}>
+        <Button
+          w="$full"
+          borderRadius={8}
+          sx={{_android: {mb: 10}}}
+          onPress={() => navigation.navigate('work-editions', {key: workOLID})}>
+          <ButtonText>Browse Work Editions</ButtonText>
+        </Button>
+      </HStack>
     </SafeAreaView>
   );
 };

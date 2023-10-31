@@ -16,6 +16,8 @@ import SubjectWorksScreen from 'src/modules/subjectWorks/SubjectWorks';
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
 import WorkDetailScreen from 'src/modules/workDetails/WorkDetails';
+import WorkEditionScreen from 'src/modules/workEditions/WorkEditions';
+import BookDetailScreen from 'src/modules/bookDetails/BookDetails';
 
 export type StackProps = NativeStackScreenProps<RootStackParamList>;
 
@@ -90,6 +92,8 @@ const Router = () => {
       <AppStack.Screen name="dashboard" component={HomeTabBarStack} />
       <AppStack.Screen name="subject-works" component={SubjectWorksScreen} />
       <AppStack.Screen name="work-details" component={WorkDetailScreen} />
+      <AppStack.Screen name="work-editions" component={WorkEditionScreen} />
+      <AppStack.Screen name="book-details" component={BookDetailScreen} />
       {/* <AppStack.Screen name="inappbrowser" component={Home} /> */}
     </AppStack.Navigator>
   );

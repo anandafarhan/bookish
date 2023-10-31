@@ -256,26 +256,34 @@ interface IGetEditionParams {
   limit?: number;
   offset?: number;
 }
+
 export interface IGetBookResponse {
-  identifiers: Identifiers;
-  title: string;
-  authors: Type[];
-  publish_date: string;
   publishers: string[];
-  covers: number[];
-  contributions: string[];
-  languages: Type[];
-  source_records: string[];
-  local_id: string[];
-  type: Type;
-  first_sentence: BookCreated;
-  key: string;
-  number_of_pages: number;
-  works: Type[];
-  classifications: Classifications;
-  ocaid: string;
+  description: BookCreated;
   isbn_10: string[];
+  series: string[];
+  covers: number[];
+  full_title: string;
+  lc_classifications: string[];
+  key: string;
+  authors: Type[];
+  ocaid: string;
+  publish_places: string[];
   isbn_13: string[];
+  pagination: string;
+  source_records: string[];
+  title: string;
+  dewey_decimal_class: string[];
+  number_of_pages: number;
+  languages: Type[];
+  subjects: string[];
+  publish_date: string;
+  publish_country: string;
+  by_statement: string;
+  oclc_numbers: string[];
+  works: Type[];
+  type: Type;
+  local_id: string[];
   latest_revision: number;
   revision: number;
   created: BookCreated;
@@ -286,16 +294,9 @@ export interface Type {
   key: string;
 }
 
-export interface Classifications {}
-
 export interface BookCreated {
   type: string;
   value: string;
-}
-
-export interface Identifiers {
-  goodreads: string[];
-  librarything: string[];
 }
 
 //#endregion =================== Books API ===================
