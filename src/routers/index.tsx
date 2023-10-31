@@ -1,4 +1,5 @@
 import React from 'react';
+import {useColorScheme} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -10,10 +11,10 @@ import Styles from 'src/styles';
 import Home from 'src/modules/dashboard/home/Home';
 import BookingsScreen from 'src/modules/dashboard/bookings/Bookings';
 import SavedBookScreen from 'src/modules/dashboard/saved/Saved';
+import SubjectBooksScreen from 'src/modules/subjects/SubjectBooks';
 
 import {screenOptions} from './routerConfig';
 import {RootStackParamList} from './routerType';
-import {useColorScheme} from 'react-native';
 
 export type StackProps = NativeStackScreenProps<RootStackParamList>;
 
@@ -86,6 +87,7 @@ const Router = () => {
       screenOptions={{...screenOptions}}
       initialRouteName="dashboard">
       <AppStack.Screen name="dashboard" component={HomeTabBarStack} />
+      <AppStack.Screen name="subject-books" component={SubjectBooksScreen} />
       {/* <AppStack.Screen name="inappbrowser" component={Home} /> */}
     </AppStack.Navigator>
   );

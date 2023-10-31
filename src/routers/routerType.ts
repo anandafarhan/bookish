@@ -14,4 +14,6 @@ export type RootStackParamList = {
   'dashboard/bookings': undefined;
   'dashboard/saved': undefined;
   'dashboard/account': undefined;
+
+  'subject-books': {subject: string};
 };

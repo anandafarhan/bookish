@@ -5,6 +5,7 @@ import {FlatList, Pressable, StyleSheet} from 'react-native';
 import ItemCard from './ItemCard';
 import ItemListCard from './ItemListCard';
 import Library, {IGetSubjectsResponse} from 'src/service/Library';
+import useAppNavigation from 'src/hooks/useAppNavigation';
 
 type Props = {
   subject: string;
@@ -13,7 +14,8 @@ type Props = {
   vertical?: boolean;
 };
 
-const BookSection = ({subject, limit = 5, onSeeMore, vertical}: Props) => {
+const BookSection = ({subject, limit = 5, vertical}: Props) => {
+  const navigation = useAppNavigation();
   const [data, setData] = React.useState<IGetSubjectsResponse['works']>([]);
 
   const fetchData = async () => {
@@ -42,7 +44,8 @@ const BookSection = ({subject, limit = 5, onSeeMore, vertical}: Props) => {
           <Text fontSize={20} fontWeight="$bold">
             {subject}
           </Text>
-          <Pressable onPress={onSeeMore}>
+          <Pressable
+            onPress={() => navigation.navigate('subject-books', {subject})}>
             <Text
               fontSize={14}
               fontWeight="$medium"
