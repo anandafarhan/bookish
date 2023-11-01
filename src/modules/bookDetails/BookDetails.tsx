@@ -50,6 +50,9 @@ import useLibrary, {BookingStatus} from 'src/stores/library';
 type Props = NativeStackScreenProps<RootStackParamList, 'book-details'>;
 
 const BookDetailScreen = ({route, navigation}: Props) => {
+  const bookings = useLibrary(state => state.bookings).map(
+    item => item.bookOLID,
+  );
   const isDarkMode = useColorScheme() === 'dark';
   const gray = useToken('colors', 'blueGray600');
 
@@ -264,7 +267,8 @@ const BookDetailScreen = ({route, navigation}: Props) => {
           w="80%"
           borderRadius={8}
           sx={{_android: {mb: 10}}}
-          onPress={() => setModalOpen(true)}>
+          onPress={() => setModalOpen(true)}
+          isDisabled={bookings.includes(bookOLID)}>
           <ButtonText>Borrow This Book</ButtonText>
         </Button>
       </HStack>
