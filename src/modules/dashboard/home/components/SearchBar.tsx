@@ -19,7 +19,7 @@ const SearchBar = () => {
         alignItems="center"
         sx={{_light: {bg: '$blueGray200'}, _dark: {bg: '$blueGray700'}}}>
         <Ionicons name="search" size={20} color={primary} />
-        <Text color={primary}>Search here</Text>
+        <Text color={primary}>Search here (cosmetic only)</Text>
       </HStack>
     </Pressable>
   );
