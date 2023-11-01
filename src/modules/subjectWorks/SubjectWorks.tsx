@@ -27,12 +27,14 @@ const SubjectWorksScreen = ({route, navigation}: Props) => {
   const {subject} = route?.params;
   const isDarkMode = useColorScheme() === 'dark';
   const gray = useToken('colors', 'blueGray600');
+  const [size, setSize] = React.useState(0);
   const [qOffset, setQOffset] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
   const [data, setData] = React.useState<IGetSubjectsResponse['works']>([]);
 
   const pageLimit = 4;
   const currPage = qOffset === 0 ? 1 : qOffset / pageLimit + 1;
+  const maxPage = Math.trunc(size / pageLimit);
   const fetchData = async (offset: number = 0) => {
     setIsLoading(true);
     const response = await Library.getSubject({
@@ -43,6 +45,7 @@ const SubjectWorksScreen = ({route, navigation}: Props) => {
 
     if (response?.status === 200) {
       setQOffset(offset);
+      setSize(response?.data?.work_count);
       setData(response?.data?.works);
     }
     setIsLoading(false);
@@ -137,7 +140,8 @@ const SubjectWorksScreen = ({route, navigation}: Props) => {
             borderRadius={8}
             sx={{_light: {bg: '$blueGray300'}, _dark: {bg: '$coolGray700'}}}
             onPress={() => fetchData(qOffset - pageLimit)}
-            disabled={isLoading || qOffset < pageLimit}>
+            disabled={isLoading || qOffset < pageLimit}
+            opacity={isLoading || qOffset < pageLimit ? 0.5 : 1}>
             <Ionicons
               name="arrow-back"
               size={24}
@@ -145,8 +149,8 @@ const SubjectWorksScreen = ({route, navigation}: Props) => {
             />
           </Pressable>
 
-          <Text w={30} fontSize={20} fontWeight="$bold" textAlign="center">
-            {currPage}
+          <Text w={80} fontSize={18} fontWeight="$bold" textAlign="center">
+            {currPage}/{maxPage}
           </Text>
 
           <Pressable
@@ -155,7 +159,8 @@ const SubjectWorksScreen = ({route, navigation}: Props) => {
             borderRadius={8}
             sx={{_light: {bg: '$blueGray300'}, _dark: {bg: '$coolGray700'}}}
             onPress={() => fetchData(qOffset + pageLimit)}
-            disabled={isLoading}>
+            disabled={isLoading || currPage >= maxPage}
+            opacity={isLoading || currPage >= maxPage ? 0.5 : 1}>
             <Ionicons
               name="arrow-forward"
               size={24}

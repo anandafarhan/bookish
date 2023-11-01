@@ -17,12 +17,14 @@ type Props = NativeStackScreenProps<RootStackParamList, 'work-editions'>;
 const WorkEditionScreen = ({route}: Props) => {
   const {key: olid} = route?.params;
   const isDarkMode = useColorScheme() === 'dark';
+  const [size, setSize] = React.useState(0);
   const [qOffset, setQOffset] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
   const [data, setData] = React.useState<IGetEditionsResponse['entries']>([]);
 
   const pageLimit = 4;
   const currPage = qOffset === 0 ? 1 : qOffset / pageLimit + 1;
+  const maxPage = Math.trunc(size / pageLimit);
   const fetchData = async (offset: number = 0) => {
     setIsLoading(true);
     const response = await Library.getWorkEdition({
@@ -33,6 +35,7 @@ const WorkEditionScreen = ({route}: Props) => {
 
     if (response?.status === 200) {
       setQOffset(offset);
+      setSize(response?.data?.size);
       setData(response?.data?.entries);
     }
     setIsLoading(false);
@@ -69,7 +72,8 @@ const WorkEditionScreen = ({route}: Props) => {
             borderRadius={8}
             sx={{_light: {bg: '$blueGray300'}, _dark: {bg: '$coolGray700'}}}
             onPress={() => fetchData(qOffset - pageLimit)}
-            disabled={isLoading || qOffset < pageLimit}>
+            disabled={isLoading || qOffset < pageLimit}
+            opacity={isLoading || qOffset < pageLimit ? 0.5 : 1}>
             <Ionicons
               name="arrow-back"
               size={24}
@@ -77,8 +81,8 @@ const WorkEditionScreen = ({route}: Props) => {
             />
           </Pressable>
 
-          <Text w={30} fontSize={20} fontWeight="$bold" textAlign="center">
-            {currPage}
+          <Text w={80} fontSize={18} fontWeight="$bold" textAlign="center">
+            {currPage}/{maxPage}
           </Text>
 
           <Pressable
@@ -87,7 +91,8 @@ const WorkEditionScreen = ({route}: Props) => {
             borderRadius={8}
             sx={{_light: {bg: '$blueGray300'}, _dark: {bg: '$coolGray700'}}}
             onPress={() => fetchData(qOffset + pageLimit)}
-            disabled={isLoading}>
+            disabled={isLoading || currPage >= maxPage}
+            opacity={isLoading || currPage >= maxPage ? 0.5 : 1}>
             <Ionicons
               name="arrow-forward"
               size={24}
