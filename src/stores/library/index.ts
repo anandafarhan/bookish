@@ -22,7 +22,7 @@ export interface BookingItem {
 }
 
 export interface SavedBookItem
-  extends Pick<BookingItem, 'bookOLID' | 'title' | 'author'> {}
+  extends Pick<BookingItem, 'bookOLID' | 'title' | 'author' | 'cover'> {}
 
 interface ILibraryState {
   bookings: BookingItem[];

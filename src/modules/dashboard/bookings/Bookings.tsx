@@ -1,5 +1,7 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import {FlatList, StyleSheet} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   Box,
   HStack,
@@ -8,12 +10,12 @@ import {
   Pressable,
   ScrollView,
   Text,
+  useToken,
 } from '@gluestack-ui/themed';
 
 import Styles from 'src/styles';
 import {SafeAreaView} from 'src/core/components/native';
 import useLibrary, {BookingStatus} from 'src/stores/library';
-import dayjs from 'dayjs';
 
 const status = [
   {
@@ -77,6 +79,7 @@ const changeBookingStatus = (bookingStatus: BookingStatus) => {
 };
 
 const BookingsScreen = () => {
+  const gray = useToken('colors', 'blueGray600');
   const bookings = useLibrary(state => state.bookings);
   const updateBookingStatus = useLibrary(state => state.updateBookingStatus);
   const deleteBooking = useLibrary(state => state.deleteBookings);
@@ -137,13 +140,25 @@ const BookingsScreen = () => {
                   delayLongPress={3000}
                   onLongPress={() => deleteBooking(item.bookOLID)}>
                   <HStack gap={10} alignItems="center">
-                    <Image
-                      alt={item.title}
-                      source={{uri: item?.cover}}
-                      w={80}
-                      h={100}
-                      borderRadius={10}
-                    />
+                    {item?.cover ? (
+                      <Image
+                        alt={item.title}
+                        source={{uri: item?.cover}}
+                        w={80}
+                        h={100}
+                        borderRadius={10}
+                      />
+                    ) : (
+                      <Box
+                        w={80}
+                        h={100}
+                        bg="$blueGray200"
+                        borderRadius={8}
+                        justifyContent="center"
+                        alignItems="center">
+                        <FontAwesome name="book" size={30} color={gray} />
+                      </Box>
+                    )}
                     <Box w="70%">
                       <HStack
                         justifyContent="space-between"

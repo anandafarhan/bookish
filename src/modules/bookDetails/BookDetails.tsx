@@ -50,9 +50,6 @@ import useLibrary, {BookingStatus} from 'src/stores/library';
 type Props = NativeStackScreenProps<RootStackParamList, 'book-details'>;
 
 const BookDetailScreen = ({route, navigation}: Props) => {
-  const bookings = useLibrary(state => state.bookings).map(
-    item => item.bookOLID,
-  );
   const isDarkMode = useColorScheme() === 'dark';
   const gray = useToken('colors', 'blueGray600');
 
@@ -71,10 +68,17 @@ const BookDetailScreen = ({route, navigation}: Props) => {
     IGetAuthorResponse | undefined
   >();
 
-  const addBookings = useLibrary(state => state.addBookings);
-
   const {key} = route?.params;
   const bookOLID = key.replace('/books/', '');
+
+  const bookings = useLibrary(state => state.bookings).map(
+    item => item.bookOLID,
+  );
+  const bookSaved = useLibrary(state => state.savedBooks)
+    .map(item => item.bookOLID)
+    .includes(bookOLID);
+  const addBookings = useLibrary(state => state.addBookings);
+  const toggleBookSave = useLibrary(state => state.toggleBookSave);
 
   const fetchBookDetail = async () => {
     const response = await Library.getBook(bookOLID);
@@ -248,7 +252,7 @@ const BookDetailScreen = ({route, navigation}: Props) => {
         </Box>
       </ScrollView>
       <HStack py={10} px={20} justifyContent="space-around" alignItems="center">
-        <Box
+        <Pressable
           w={40}
           h={40}
           borderRadius={8}
@@ -256,13 +260,23 @@ const BookDetailScreen = ({route, navigation}: Props) => {
           borderColor="$blueGray300"
           justifyContent="center"
           alignItems="center"
-          sx={{_android: {mb: 10}}}>
+          sx={{_android: {mb: 10}}}
+          onPress={() =>
+            toggleBookSave({
+              bookOLID,
+              title: bookDetail?.title,
+              author: authorDetail?.name,
+              cover: bookDetail?.covers?.[0]
+                ? `${GET_COVER_API}/id/${bookDetail?.covers?.[0]}-M.jpg`
+                : undefined,
+            })
+          }>
           <Ionicons
-            name="bookmark-outline"
+            name={bookSaved ? 'bookmark' : 'bookmark-outline'}
             size={30}
             color={isDarkMode ? '#FFF' : gray}
           />
-        </Box>
+        </Pressable>
         <Button
           w="80%"
           borderRadius={8}
@@ -387,7 +401,9 @@ const BookDetailScreen = ({route, navigation}: Props) => {
                   bookOLID,
                   title: bookDetail?.title,
                   author: authorDetail?.name,
-                  cover: `${GET_COVER_API}/id/${bookDetail?.covers?.[0]}-M.jpg`,
+                  cover: bookDetail?.covers?.[0]
+                    ? `${GET_COVER_API}/id/${bookDetail?.covers?.[0]}-M.jpg`
+                    : undefined,
                   status: BookingStatus.Submitted,
                 });
                 navigation.navigate('dashboard/bookings');
