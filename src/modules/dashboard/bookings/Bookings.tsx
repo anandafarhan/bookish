@@ -14,6 +14,7 @@ import {
 } from '@gluestack-ui/themed';
 
 import Styles from 'src/styles';
+import {capitalize} from 'src/utils/utils';
 import {SafeAreaView} from 'src/core/components/native';
 import useLibrary, {BookingStatus} from 'src/stores/library';
 
@@ -186,7 +187,7 @@ const BookingsScreen = () => {
                           <Text
                             fontSize={12}
                             color={statusStyle(item.status).text}>
-                            {item.status}
+                            {capitalize(item.status)}
                           </Text>
                         </Pressable>
                       </HStack>

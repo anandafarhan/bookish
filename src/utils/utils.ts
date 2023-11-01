@@ -30,3 +30,9 @@ export const formatPhoneNumber = (phone?: string): string => {
 
   return formattedPhone.replaceAll(/(\+62)|[-()+ ]/g, '');
 };
+
+export const capitalize = (word: string) => {
+  const firstLetter = word.charAt(0).toUpperCase();
+
+  return firstLetter + word.slice(1);
+};
