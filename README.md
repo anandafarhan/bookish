@@ -40,6 +40,14 @@ yarn ios
 
 # android
 yarn android
+
+# using npm
+
+# ios
+npm run ios
+
+# android
+npm run android
 ```
 
 If you have miss align depedency version run
