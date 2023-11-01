@@ -45,6 +45,7 @@ import {ModalContent} from '@gluestack-ui/themed';
 import {SelectIcon} from '@gluestack-ui/themed';
 import {Icon} from '@gluestack-ui/themed';
 import dayjs from 'dayjs';
+import useLibrary, {BookingStatus} from 'src/stores/library';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'book-details'>;
 
@@ -66,6 +67,9 @@ const BookDetailScreen = ({route, navigation}: Props) => {
   const [authorDetail, setAuthorDeatil] = React.useState<
     IGetAuthorResponse | undefined
   >();
+
+  const addBookings = useLibrary(state => state.addBookings);
+
   const {key} = route?.params;
   const bookOLID = key.replace('/books/', '');
 
@@ -371,7 +375,20 @@ const BookDetailScreen = ({route, navigation}: Props) => {
               borderWidth="$0"
               onPress={() => {
                 setModalOpen(false);
-              }}>
+                addBookings({
+                  //@ts-ignore
+                  pickupDate,
+                  pickupTime,
+                  pickupLocation: 'GoodWill Book Store',
+                  bookOLID,
+                  title: bookDetail?.title,
+                  author: authorDetail?.name,
+                  cover: `${GET_COVER_API}/id/${bookDetail?.covers?.[0]}-M.jpg`,
+                  status: BookingStatus.Submitted,
+                });
+                navigation.navigate('dashboard/bookings');
+              }}
+              isDisabled={!pickupDate || !pickupTime}>
               <ButtonText>Confirm</ButtonText>
             </Button>
           </ModalFooter>

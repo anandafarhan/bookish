@@ -11,30 +11,78 @@ import {
 } from '@gluestack-ui/themed';
 
 import Styles from 'src/styles';
-import images from 'src/assets/images';
 import {SafeAreaView} from 'src/core/components/native';
+import useLibrary, {BookingStatus} from 'src/stores/library';
+import dayjs from 'dayjs';
 
 const status = [
   {
+    label: 'All',
+    key: undefined,
+  },
+  {
     label: 'Submitted',
-    key: 'submitted',
+    key: BookingStatus.Submitted,
   },
   {
     label: 'Picked',
-    key: 'picked',
+    key: BookingStatus.Picked,
   },
   {
     label: 'Completed',
-    key: 'completed',
+    key: BookingStatus.Completed,
   },
   {
     label: 'Cancelled',
-    key: 'cancelled',
+    key: BookingStatus.Cancelled,
   },
 ];
 
+const statusStyle = (bookingStatus: BookingStatus) => {
+  switch (bookingStatus) {
+    case BookingStatus.Picked:
+      return {
+        bg: '$orange100',
+        text: '$orange500',
+      };
+    case BookingStatus.Completed:
+      return {
+        bg: '$coolGray100',
+        text: '$coolGray500',
+      };
+    case BookingStatus.Cancelled:
+      return {
+        bg: '$red100',
+        text: '$red500',
+      };
+    default:
+      return {
+        bg: '$blue100',
+        text: '$blue500',
+      };
+  }
+};
+
+const changeBookingStatus = (bookingStatus: BookingStatus) => {
+  switch (bookingStatus) {
+    case BookingStatus.Picked:
+      return BookingStatus.Completed;
+    case BookingStatus.Completed:
+      return BookingStatus.Cancelled;
+    case BookingStatus.Cancelled:
+      return BookingStatus.Submitted;
+    default:
+      return BookingStatus.Picked;
+  }
+};
+
 const BookingsScreen = () => {
-  const [statusFilter, setStatusFilter] = React.useState('submitted');
+  const bookings = useLibrary(state => state.bookings);
+  const updateBookingStatus = useLibrary(state => state.updateBookingStatus);
+  const deleteBooking = useLibrary(state => state.deleteBookings);
+  const [statusFilter, setStatusFilter] = React.useState<
+    BookingStatus | undefined
+  >();
   return (
     <SafeAreaView flex={1}>
       <Heading ml={20} my={10} fontSize={22}>
@@ -45,8 +93,7 @@ const BookingsScreen = () => {
         renderItem={({item}) => (
           <Pressable onPress={() => setStatusFilter(item.key)}>
             <Box
-              pt={2}
-              pb={5}
+              py={2}
               px={10}
               borderRadius={8}
               borderWidth={1}
@@ -65,66 +112,89 @@ const BookingsScreen = () => {
           </Pressable>
         )}
         contentContainerStyle={style.containerStyle}
+        showsHorizontalScrollIndicator={false}
         horizontal
       />
-      <ScrollView contentContainerStyle={Styles.scrollViewContainer}>
-        <Box px={20} gap={15}>
-          {Array(6)
-            .fill('')
-            .map(() => (
-              <Pressable
-                borderRadius={12}
-                sx={{
-                  _light: {bg: '$blueGray200'},
-                  _dark: {bg: '$blueGray700'},
-                }}>
-                <HStack gap={10} alignItems="center">
-                  <Image
-                    alt="title"
-                    source={images.book_cover}
-                    w={80}
-                    h={100}
-                    borderRadius={10}
-                  />
-                  <Box w="70%">
-                    <HStack justifyContent="space-between" alignItems="center">
-                      <Text
-                        fontSize={16}
-                        fontWeight="$medium"
-                        sx={{_light: {color: '$black'}}}>
-                        Book Title
-                      </Text>
-                      <Box
-                        bg="$green100"
-                        px={10}
-                        borderRadius={6}
-                        justifyContent="center"
+      <ScrollView h="86%" contentContainerStyle={Styles.scrollViewContainer}>
+        <Box flexGrow={1} px={20} gap={15}>
+          {bookings.length < 1 ? (
+            <Box flex={1} justifyContent="center" alignItems="center">
+              <Heading>You have no booking yet</Heading>
+            </Box>
+          ) : (
+            bookings
+              .filter(item =>
+                statusFilter ? item.status === statusFilter : true,
+              )
+              .map(item => (
+                <Pressable
+                  borderRadius={12}
+                  sx={{
+                    _light: {bg: '$blueGray200'},
+                    _dark: {bg: '$blueGray700'},
+                  }}
+                  delayLongPress={3000}
+                  onLongPress={() => deleteBooking(item.bookOLID)}>
+                  <HStack gap={10} alignItems="center">
+                    <Image
+                      alt={item.title}
+                      source={{uri: item?.cover}}
+                      w={80}
+                      h={100}
+                      borderRadius={10}
+                    />
+                    <Box w="70%">
+                      <HStack
+                        justifyContent="space-between"
                         alignItems="center">
-                        <Text fontSize={12} color="$green500">
-                          Picked
+                        <Text
+                          w="70%"
+                          fontSize={16}
+                          fontWeight="$medium"
+                          numberOfLines={2}
+                          sx={{_light: {color: '$black'}}}>
+                          {item.title}
                         </Text>
-                      </Box>
-                    </HStack>
-                    <Text fontSize={14} fontWeight="$light">
-                      Book Author
-                    </Text>
-                    <HStack mt={10} gap={5}>
-                      <Text fontSize={12} color="$blue500">
-                        GoodBooks
+                        <Pressable
+                          bg={statusStyle(item.status).bg}
+                          px={10}
+                          borderRadius={6}
+                          justifyContent="center"
+                          alignItems="center"
+                          onPress={() =>
+                            updateBookingStatus(
+                              item.bookOLID,
+                              changeBookingStatus(item.status),
+                            )
+                          }>
+                          <Text
+                            fontSize={12}
+                            color={statusStyle(item.status).text}>
+                            {item.status}
+                          </Text>
+                        </Pressable>
+                      </HStack>
+                      <Text fontSize={14} fontWeight="$light">
+                        {item.author}
                       </Text>
-                      <Text>-</Text>
-                      <Text fontSize={12} sx={{_light: {color: '$black'}}}>
-                        12:00 PM
-                      </Text>
-                      <Text>-</Text>
-                      <Text fontSize={12} sx={{_light: {color: '$black'}}}>
-                        25 Dec 2023
-                      </Text>
-                    </HStack>
-                  </Box>
-                </HStack>
-              </Pressable>
-            ))}
+                      <HStack mt={10} gap={2}>
+                        <Text fontSize={12} color="$blue500">
+                          {item.pickupLocation}
+                        </Text>
+                        <Text>-</Text>
+                        <Text fontSize={12} sx={{_light: {color: '$black'}}}>
+                          {dayjs(item.pickupDate).format('DD MMM YYYY')}
+                        </Text>
+                        <Text>-</Text>
+                        <Text fontSize={12} sx={{_light: {color: '$black'}}}>
+                          {item.pickupTime}
+                        </Text>
+                      </HStack>
+                    </Box>
+                  </HStack>
+                </Pressable>
+              ))
+          )}
         </Box>
       </ScrollView>
     </SafeAreaView>
